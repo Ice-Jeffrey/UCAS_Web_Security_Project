@@ -1,2 +1,4 @@
-./raw_data
-./venv
+raw_data
+data
+venv
+.vscode
