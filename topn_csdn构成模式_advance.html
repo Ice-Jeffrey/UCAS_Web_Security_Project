@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Awesome-pyecharts</title>
+            <script type="text/javascript" src="https://assets.pyecharts.org/assets/echarts.min.js"></script>
+
+</head>
+<body onresize="resizeFresh()">
+	<style type="text/css">
+		html, body {
+			height: 100%;
+			weight: 100%
+		}
+	</style>
+    <div id="2637c2736e3e41118bcdd2f5d99b677c" class="chart-container" style="width:95%; height:95%; margin:auto; top: 30px"></div>
+    <script>
+        var chart_2637c2736e3e41118bcdd2f5d99b677c = echarts.init(
+            document.getElementById('2637c2736e3e41118bcdd2f5d99b677c'), 'white', {renderer: 'canvas'});
+        var option_2637c2736e3e41118bcdd2f5d99b677c = {
+    "animation": true,
+    "animationThreshold": 2000,
+    "animationDuration": 1000,
+    "animationEasing": "cubicOut",
+    "animationDelay": 0,
+    "animationDurationUpdate": 300,
+    "animationEasingUpdate": "cubicOut",
+    "animationDelayUpdate": 0,
+    "color": [
+        "#c23531",
+        "#2f4554",
+        "#61a0a8",
+        "#d48265",
+        "#749f83",
+        "#ca8622",
+        "#bda29a",
+        "#6e7074",
+        "#546570",
+        "#c4ccd3",
+        "#f05b72",
+        "#ef5b9c",
+        "#f47920",
+        "#905a3d",
+        "#fab27b",
+        "#2a5caa",
+        "#444693",
+        "#726930",
+        "#b2d235",
+        "#6d8346",
+        "#ac6767",
+        "#1d953f",
+        "#6950a1",
+        "#918597"
+    ],
+    "series": [
+        {
+            "type": "pie",
+            "clockwise": true,
+            "data": [
+                {
+                    "name": "N",
+                    "value": 2894599
+                },
+                {
+                    "name": "AN",
+                    "value": 1830835
+                },
+                {
+                    "name": "A",
+                    "value": 795783
+                },
+                {
+                    "name": "NA",
+                    "value": 415453
+                },
+                {
+                    "name": "ANA",
+                    "value": 124636
+                },
+                {
+                    "name": "AON",
+                    "value": 46698
+                },
+                {
+                    "name": "ANO",
+                    "value": 37830
+                },
+                {
+                    "name": "NAN",
+                    "value": 37124
+                },
+                {
+                    "name": "ANAN",
+                    "value": 34063
+                },
+                {
+                    "name": "NO",
+                    "value": 23915
+                }
+            ],
+            "radius": [
+                "40%",
+                "75%"
+            ],
+            "center": [
+                "50%",
+                "50%"
+            ],
+            "label": {
+                "show": true,
+                "position": "top",
+                "margin": 8,
+                "formatter": "{b}: {d}%"
+            },
+            "rippleEffect": {
+                "show": true,
+                "brushType": "stroke",
+                "scale": 2.5,
+                "period": 4
+            }
+        }
+    ],
+    "legend": [
+        {
+            "data": [
+                "N",
+                "AN",
+                "A",
+                "NA",
+                "ANA",
+                "AON",
+                "ANO",
+                "NAN",
+                "ANAN",
+                "NO"
+            ],
+            "selected": {},
+            "show": true,
+            "right": "2%",
+            "top": "5%",
+            "orient": "vertical",
+            "padding": 5,
+            "itemGap": 10,
+            "itemWidth": 25,
+            "itemHeight": 14
+        }
+    ],
+    "tooltip": {
+        "show": true,
+        "trigger": "item",
+        "triggerOn": "mousemove|click",
+        "axisPointer": {
+            "type": "line"
+        },
+        "showContent": true,
+        "alwaysShowContent": false,
+        "showDelay": 0,
+        "hideDelay": 100,
+        "textStyle": {
+            "fontSize": 14
+        },
+        "borderWidth": 0,
+        "padding": 5
+    },
+    "title": [
+        {
+            "text": "topn_csdn\u6784\u6210\u6a21\u5f0f_advance",
+            "padding": 5,
+            "itemGap": 10
+        }
+    ]
+};
+        chart_2637c2736e3e41118bcdd2f5d99b677c.setOption(option_2637c2736e3e41118bcdd2f5d99b677c);
+    </script>
+	<script>  
+		 //窗口大小变化时候，进行刷新页面操作，防止样式混乱
+		var x=window.innerWidth;
+		function resizeFresh(){
+			if(x!=window.innerWidth)
+				location.reload();
+		}
+	</script>
+</body>
+</html>
