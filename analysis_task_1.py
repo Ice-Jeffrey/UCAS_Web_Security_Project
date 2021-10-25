@@ -1,3 +1,5 @@
+# Length & Components analysis for token
+
 from collections import Counter
 import os
 import pickle
