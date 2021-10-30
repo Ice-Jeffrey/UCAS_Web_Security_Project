@@ -1,4 +1,32 @@
 from math import log
+import re
+import pickle
+
+
+FILE_NAME = 'yahoo'
+# FILE_NAME = 'csdn'
+FILE_PATH = "./data/" + FILE_NAME + ".txt" # 453491
+TOTAL_COUNT = None
+
+
+def init_data():
+    with open(FILE_PATH, 'r', encoding='utf-8') as f:
+        lines = f.readlines()
+
+    global TOTAL_COUNT
+    TOTAL_COUNT = len(lines)
+
+    # print("Total Count =", TOTAL_COUNT)
+
+    if("csdn" in FILE_PATH):
+        passwords = ['#'.join(line.split(' # ')[1:-1]).strip()
+                     for line in lines]
+    else:
+        passwords = [':'.join(line.split(':')[2:]).strip()
+                    for line in lines]
+
+    return passwords
+
 
 # Build a cost dictionary, assuming Zipf's law and cost = -math.log(probability).
 words = open("./lib/word_lib.txt").read().split()
@@ -33,4 +61,48 @@ def infer_spaces(s):
         out.append(s[i - k:i])
         i -= k
 
-    return " ".join(reversed(out))
+    return reversed(out)
+
+
+def word_analysis(passwords):
+    word_lib = {}
+
+    for password in passwords:
+        # 只提取口令中的英文
+        chars = re.split(r'[^A-Za-z]', password)
+        while '' in chars:
+            chars.remove('')
+        
+        for char in chars:
+            word_list = infer_spaces(char)
+            for word in word_list:
+                word_lib[word] = word_lib.get(word, 0) + 1
+
+    # 对得到的字典排序并输出
+    sorted_lib = sorted(word_lib.items(), key = lambda kv:(kv[1], kv[0]), reverse=True) 
+    print(sorted_lib)
+
+    # 将得到的字典保存在本地
+    with open('./results/' + FILE_NAME + '_sorted_word_lib.pkl', 'wb') as f:
+        pickle.dump(sorted_lib, f, pickle.HIGHEST_PROTOCOL)
+
+    return sorted_lib
+
+
+def main():
+    passwords = init_data()
+    
+    sorted_lib = word_analysis(passwords)
+
+
+def show():
+    with open('./results/' + FILE_NAME + '_sorted_word_lib.pkl', 'rb') as f:
+        sorted_lib = pickle.load(f)
+    
+    for element in reversed(sorted_lib):
+        print(element)
+
+
+if __name__ == "__main__":
+    # main()
+    show()
