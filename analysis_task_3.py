@@ -3,8 +3,8 @@ import re
 import pickle
 
 
-FILE_NAME = 'yahoo'
-# FILE_NAME = 'csdn'
+# FILE_NAME = 'yahoo'
+FILE_NAME = 'csdn'
 FILE_PATH = "./data/" + FILE_NAME + ".txt" # 453491
 TOTAL_COUNT = None
 
@@ -111,23 +111,39 @@ def show():
         with open('./results/' + FILE_NAME + '_sorted_word_lib.pkl', 'rb') as f:
             sorted_lib = pickle.load(f)
         f.close()
-    
-    total = 0
+
     for element in reversed(sorted_lib):
+        print(element)
+
+
+def pkl2txt():
+    with open('./results/' + FILE_NAME + '_sorted_pinyin_lib.pkl', 'rb') as f:
+        pinyin_lib = pickle.load(f)
+    f.close()
+
+    with open('./results/' + FILE_NAME + '_sorted_word_lib.pkl', 'rb') as f:
+        word_lib = pickle.load(f)
+    f.close()
+
+    total = 0
+    total_lib = pinyin_lib + word_lib
+    for element in reversed(total_lib):
         total += element[1]
 
+    total_dic = {}
+    for element in total_lib:
+        key, value = element[0], element[1]
+        total_dic[key] = total_dic.get(key, 0) + value 
+    
+    sorted_list = sorted(total_dic.items(), key = lambda kv:(kv[1], kv[0]), reverse=True) 
+
     lines = []
-    for element in sorted_lib:
-        line = element[0]
-        line += ' ' + str(element[1])
-        line += ' ' + str(element[1] / total)
-        line += ' ' + str(len(element[0]))
+    for item in sorted_list:
+        line = item[0]
+        line += ' ' + str(item[1] / total)
         lines.append(line)
     
-    if 'pinyin' in lib_path:
-        target_path = './results/' + FILE_NAME + '_pinyin.txt'
-    else:
-        target_path = './results/' + FILE_NAME + '_word.txt'
+    target_path = './results/' + FILE_NAME + '_lib.txt'
     with open(target_path, 'w') as f:
         f.write('\n'.join(lines))
     f.close()
@@ -135,4 +151,5 @@ def show():
 
 if __name__ == "__main__":
     # main()
-    show()
+    # show()
+    pkl2txt()
