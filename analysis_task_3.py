@@ -3,8 +3,8 @@ import re
 import pickle
 
 
-# FILE_NAME = 'yahoo'
-FILE_NAME = 'csdn'
+FILE_NAME = 'yahoo'
+# FILE_NAME = 'csdn'
 FILE_PATH = "./data/" + FILE_NAME + ".txt" # 453491
 TOTAL_COUNT = None
 
@@ -29,8 +29,8 @@ def init_data():
 
 
 # Build a cost dictionary, assuming Zipf's law and cost = -math.log(probability).
-# lib_path = './lib/word_lib.txt'
-lib_path = './lib/pinyin_lib.txt'
+lib_path = './lib/word_lib.txt'
+# lib_path = './lib/pinyin_lib.txt'
 words = open(lib_path, encoding='utf-8').read().split()
 wordcost = dict((k, log((i + 1) * log(len(words)))) for i, k in enumerate(words))
 maxword = max(len(x) for x in words)
@@ -84,7 +84,7 @@ def word_analysis(passwords):
     sorted_lib = sorted(word_lib.items(), key = lambda kv:(kv[1], kv[0]), reverse=True) 
     print(sorted_lib)
 
-    # 将得到的字典保存在本地
+    # 将排序后得到的列表保存在本地
     if 'pinyin' in lib_path:
         with open('./results/' + FILE_NAME + '_sorted_pinyin_lib.pkl', 'wb') as f:
             pickle.dump(sorted_lib, f, pickle.HIGHEST_PROTOCOL)
@@ -112,8 +112,25 @@ def show():
             sorted_lib = pickle.load(f)
         f.close()
     
+    total = 0
     for element in reversed(sorted_lib):
-        print(element)
+        total += element[1]
+
+    lines = []
+    for element in sorted_lib:
+        line = element[0]
+        line += ' ' + str(element[1])
+        line += ' ' + str(element[1] / total)
+        line += ' ' + str(len(element[0]))
+        lines.append(line)
+    
+    if 'pinyin' in lib_path:
+        target_path = './results/' + FILE_NAME + '_pinyin.txt'
+    else:
+        target_path = './results/' + FILE_NAME + '_word.txt'
+    with open(target_path, 'w') as f:
+        f.write('\n'.join(lines))
+    f.close()
 
 
 if __name__ == "__main__":
