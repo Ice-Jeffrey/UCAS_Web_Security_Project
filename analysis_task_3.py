@@ -86,11 +86,11 @@ def word_analysis(passwords):
 
     # 将排序后得到的列表保存在本地
     if 'pinyin' in lib_path:
-        with open('./results/' + FILE_NAME + '_sorted_pinyin_lib.pkl', 'wb') as f:
+        with open('./mid/' + FILE_NAME + '_sorted_pinyin_lib.pkl', 'wb') as f:
             pickle.dump(sorted_lib, f, pickle.HIGHEST_PROTOCOL)
         f.close()
     else:
-        with open('./results/' + FILE_NAME + '_sorted_word_lib.pkl', 'wb') as f:
+        with open('./mid/' + FILE_NAME + '_sorted_word_lib.pkl', 'wb') as f:
             pickle.dump(sorted_lib, f, pickle.HIGHEST_PROTOCOL)
         f.close()
 
@@ -104,11 +104,11 @@ def main():
 
 def show():
     if 'pinyin' in lib_path:
-        with open('./results/' + FILE_NAME + '_sorted_pinyin_lib.pkl', 'rb') as f:
+        with open('./mid/' + FILE_NAME + '_sorted_pinyin_lib.pkl', 'rb') as f:
             sorted_lib = pickle.load(f)
         f.close()
     else:
-        with open('./results/' + FILE_NAME + '_sorted_word_lib.pkl', 'rb') as f:
+        with open('./mid/' + FILE_NAME + '_sorted_word_lib.pkl', 'rb') as f:
             sorted_lib = pickle.load(f)
         f.close()
 
@@ -117,11 +117,11 @@ def show():
 
 
 def pkl2txt():
-    with open('./results/' + FILE_NAME + '_sorted_pinyin_lib.pkl', 'rb') as f:
+    with open('./mid/' + FILE_NAME + '_sorted_pinyin_lib.pkl', 'rb') as f:
         pinyin_lib = pickle.load(f)
     f.close()
 
-    with open('./results/' + FILE_NAME + '_sorted_word_lib.pkl', 'rb') as f:
+    with open('./mid/' + FILE_NAME + '_sorted_word_lib.pkl', 'rb') as f:
         word_lib = pickle.load(f)
     f.close()
 
@@ -143,13 +143,13 @@ def pkl2txt():
         line += ' ' + str(item[1] / total)
         lines.append(line)
     
-    target_path = './results/' + FILE_NAME + '_lib.txt'
+    target_path = './mid/' + FILE_NAME + '_lib.txt'
     with open(target_path, 'w') as f:
         f.write('\n'.join(lines))
     f.close()
 
 
 if __name__ == "__main__":
-    # main()
+    main()
     # show()
-    pkl2txt()
+    # pkl2txt()
