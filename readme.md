@@ -65,7 +65,9 @@ Tips：有些密码中包含又分割符，因此采用了多层拼接模式以�
 
 1. 本部分对应的代码为analysis_task_2.py、task_2_date_pie.py，其中analysis_task_2.py是使用35种日期密码格式分别对csdn、yahoo的密码进行匹配，分别输出在csdn、yahoo密码中各类格式的个数。task_2_date_pie.py能够对35种密码格式用饼状图进行展示。
 
-2. 在具体的使用中，在analysis_task_2.py可以通过修改FILE_NAME来决定输入数据是csdn或者yahoo，task_2_data_pie.py能够将饼状图以html的形式在浏览器中进行查看。
+2. 生成csdn日期密码格式统计.html文件和yahoo日期密码格式统计.html文件，对应的内容分别是csdn数据集和yahoo数据集中统计的日期密码格式。
+
+3. 在具体的使用中，在analysis_task_2.py可以通过修改FILE_NAME来决定输入数据是csdn或者yahoo，task_2_data_pie.py能够将饼状图以html的形式在浏览器中进行查看。
 
 
 ## 0x04.拼音与英文单词分析
