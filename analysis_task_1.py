@@ -23,7 +23,7 @@ def show_pie(title, labels, values):
     
 FILE_NAME = 'yahoo'
 # FILE_NAME = 'csdn'
-FILE_PATH = "./" + FILE_NAME + ".txt" # 453491
+FILE_PATH = "./data/" + FILE_NAME + ".txt" # 453491
 TOTAL_COUNT = None
 
 
@@ -203,8 +203,8 @@ def main():
         with open('patterns.pkl', 'rb') as f:
             patterns, patterns_advance = pickle.load(f)
 
-    topN(FILE_NAME + '构成模式_base', patterns)
-    topN(FILE_NAME + '构成模式_advance', patterns_advance)
+    topN('./result/' + FILE_NAME + '构成模式_base', patterns)
+    topN('./result/' + FILE_NAME + '构成模式_advance', patterns_advance)
 
 
 if __name__ == '__main__':
