@@ -73,7 +73,7 @@ def word_analysis(passwords, tag):
 
     
 def main():
-    with open('./data/data_' + FILE_NAME + '.pkl', 'rb') as f:
+    with open('../data/data_' + FILE_NAME + '.pkl', 'rb') as f:
         passwords = pickle.load(f)[0]
 
     pinyin_lib = word_analysis(passwords, tag='py')

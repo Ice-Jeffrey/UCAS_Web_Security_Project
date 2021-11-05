@@ -34,7 +34,7 @@ def getRule(line):
     
 
 def main():
-    with open('./data/data_' + FILE_NAME + '.pkl', 'rb') as f:
+    with open('../data/data_' + FILE_NAME + '.pkl', 'rb') as f:
         lines = pickle.load(f)[0]
 
     rule_lib = {}

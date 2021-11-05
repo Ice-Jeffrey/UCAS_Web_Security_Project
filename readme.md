@@ -79,7 +79,7 @@ Tips：有些密码中包含又分割符，因此采用了多层拼接模式以�
     python ./analysis_task_3.py
     ```
 
-4. 画图：./task_3_pictures.py。根据上一步得到的单词/拼音与其出现次数的元组，得到不同数据集中各个长度单词/拼音中出现频数最高的结果，以便后续PCFG算法使用。得到的图片保存在./results文件夹中。其中：
+4. 画图：./task_3_pictures.py。根据上一步得到的单词/拼音与其出现次数的元组，得到不同数据集中各个长度单词/拼音中出现频数最高的结果，以便后续PCFG算法使用。得到的图片保存在./analysis/results文件夹中。其中：
    
     - csdn_length_pinyin_analysis.html：csdn数据集中长度为1~10分别出现最多的拼音。
     - csdn_length_word_analysis.html：csdn数据集中长度为1~10分别出现最多的单词。
@@ -88,6 +88,7 @@ Tips：有些密码中包含又分割符，因此采用了多层拼接模式以�
 
     使用方法：
     ```bash
+    cd analysis
     python ./task_3_pictures.py
     ```
 
@@ -99,10 +100,11 @@ Tips：有些密码中包含又分割符，因此采用了多层拼接模式以�
 
 3. 得到的结果：各种模式及其出现的频率。
 
-4. 结果存放路径：./results/CSDN_rules.pkl和./results/yahoo_rules.pkl。
+4. 结果存放路径：./analysis/results/CSDN_rules.pkl和./analysis/results/yahoo_rules.pkl。
 
 5. 使用方法：
     ```bash
+    cd analysis
     python ./analysis_task_4.py
     ```
 
@@ -112,9 +114,95 @@ Tips：有些密码中包含又分割符，因此采用了多层拼接模式以�
 
 2. 源数据：PCFG算法使用的训练集。（github中未上传）
 
-3. 结果存放路径：./results/csdn_lib_pcfg.txt和./results/yahoo_lib_pcfg.txt
+3. 结果存放路径：./analysis/results/csdn_lib_pcfg.txt和./analysis/results/yahoo_lib_pcfg.txt
 
 4. 使用方法：
     ```bash
+    cd analysis
     python ./analysis_task_5.py
     ```
+
+## 0x07. PCFG算法
+
+### Advanced PCFG
+
+对大量口令进行模式分析，规则提取后生成高质量口令字典
+
+### 目录结构与说明
+
+`./data/*`：对 csdn 与 yahoo 口令按照分析结果进行筛选后，分解为训练集与测试集后的结果
+
+`./csdn/*`：基于 csdn 数据集生成的有效规则序列与有效模式序列（筛选后的结果）
+
+`./yahoo/*`：基于 yahoo 数据集生成的有效规则序列与有效模式序列（筛选后的结果）
+
+> char_rule：基于密码中最长相邻字符串统计的规则
+>
+> char_lib：基于常见英文或拼音并使用**齐夫定律**提取的字符串统计的规则
+>
+> number_rule：基于密码中最长相邻数字统计的规则
+>
+> pattern：基于密码中的模式统计出的规则
+
+`./*_genpwds.txt`：最终生成的口令字典
+
+`./split_data.py`：实现对原始口令集合的筛选与数据集切分
+
+`./generate_rules.py`：针对输入的数据集生成规则信息
+
+`./pcfg.advance.py`：实现规则增强的 PCFG 算法
+
+`./test.py`：根据生成的口令字典在测试集中进行撞库测试
+
+`./utils.py`：通用的工具类函数
+
+### PCFG 算法
+
+#### init
+
+算法初始化模块，根据数据集名称导入规则文件与模式文件，并：
+
+1、将规则文件映射为字典，其 key 值为规则的长度，其 value 值为列表（存储长度一致的规则内容）
+
+> 其中针对字符串规则有一类是根据最长字符串匹配得到的统计规则，还有一类是基于常见英文或拼音并使用**齐夫定律**提取的字符串统计的规则，我们后续针对这两类规则进行了对比实验
+
+2、将模式分为元组的形式方便后续处理：`Example: [('L', 3), ('D', 3), ('L', 1), p]`
+
+#### generate
+
+根据常见的模式与规则进行算法的生成，特殊的是针对较深的递归考虑到频率的叠加将会造成可能性的极度降低，因此较深的（>=3）的模式将被忽略，然后又考虑到算力与算法的效率，针对数据集的数目进行了递归基数的限制（`self.limit`），如果你将使用本算法进行测试，可以执行尝试调节该参数以期达到更好的效果
+
+#### main
+
+1、需要配置好 init 函数的参数，绑定好目标规则文件，随后即可完成类的初始化（规则文件与模式文件的加载）
+
+2、文件加载后即可执行 generate() 函数，他将以列表的形式返回所有生成的口令
+
+3、选择前 N 个将生成的口令写入到本地文件
+
+### 执行
+
+#### split_data.py
+
+首先需要运行 `split_data.py` 其输入为原始的口令数据文件
+
+1、需要在 `init_data()` 模块定义文件的加载规则
+
+2、需要在 `_filter_data()` 模块自定义其过滤规则
+
+3、需要在 `_split_data()` 模块自定义训练集测试集比例，将数据集分割
+
+最后分割的数据集将持久化保存到 `./data/*`
+
+#### generate_rule.py
+
+根据配置信息中的 `FILE_NAME` 变量将自动化的加载分割后的数据集，使用训练集运行得到最初的规则文件保存到 `./{FILE_NAME}/*` 中
+
+#### pcfg.advance.py
+
+1、需要配置好 init 函数的参数，绑定好目标规则文件，随后即可完成类的初始化（规则文件与模式文件的加载）
+
+2、文件加载后即可执行 generate() 函数，他将以列表的形式返回所有生成的口令
+
+3、选择前 N 个将生成的口令写入到本地文件 `./*_genpwds.txt`
+

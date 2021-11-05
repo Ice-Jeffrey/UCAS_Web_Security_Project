@@ -3,7 +3,7 @@ import pickle
 
 FILE_NAME = 'yahoo'
 # FILE_NAME = 'csdn'
-FILE_PATH = FILE_NAME + ".txt"
+FILE_PATH = '../data/' + FILE_NAME + ".txt"
 TOTAL_COUNT = None
 
 def init_data():
