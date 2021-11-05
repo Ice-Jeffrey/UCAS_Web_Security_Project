@@ -1,0 +1,10 @@
+COUNT = 100000
+yahoo, char_rule.txt, number_rule.txt, result = 0.19242
+csdn, char_rule.txt, number_rule.txt, result = 0.27168
+yahoo, char_lib.txt, number_rule.txt, result = 0.19198
+csdn, char_lib.txt, number_rule.txt, result = 0.2314
+COUNT = 200000
+yahoo, char_rule.txt, number_rule.txt, result = 0.20852
+csdn, char_rule.txt, number_rule.txt, result = 0.27486
+yahoo, char_lib.txt, number_rule.txt, result = 0.20958
+csdn, char_lib.txt, number_rule.txt, result = 0.2346
