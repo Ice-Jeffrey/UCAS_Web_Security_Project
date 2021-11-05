@@ -23,7 +23,7 @@ def show_pie(title, labels, values):
 
 FILE_NAME = 'yahoo'
 #FILE_NAME = 'csdn'
-FILE_PATH = "./mid/" + FILE_NAME + ".txt"  # 453491
+FILE_PATH = "./data/" + FILE_NAME + ".txt"  # 453491
 TOTAL_COUNT = None
 
 def main():
